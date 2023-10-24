@@ -1,0 +1,105 @@
+Cahiers des charges fonctionnelles
+Un groupe d'étudiants souhaite réaliser un site e-commerce de vente en ligne de produits halieutiques. Ainsi pour le réaliser, 
+l'application est constitué de deux grands acteurs a savoir un utilisateur et un administrateur. Ainsi pour ce faire, l'application
+ doit se comporter ainsi, un utilisateur doit avant tout créé un compte avant tout utilisation de la plateforme. Après cela,le client
+ peut passé ou ne pas passé des commande. Donc y'a une relation d'association entre les deux table (client-commande) réuni au niveau 
+d'une table associative du nom passecommande.De plus on a  l'administrateur peut reçoit où ne pas reçoit une commande venant de la part du client.
+ Après que les commandes sont passée par les clients, l'administrateur lui peut à son niveau notifier le client que sa commande est reçu. 
+L'administrateur lui il a la possibilité de stocké ou de mettre où bien de ne pas mettre en ligne  des produits.et une fois que les produits 
+sont mises en ligne, les utilisateurs peuvent vois ces produits mises en ligne par l'administreur afin de faire leur choix passé ou ne pas une commande.
+
+******************************************************************************************************************************
+-----------------------suggestion venant de mes recherche-----------------------
+
+
+Il semble que vous ayez une idée générale de la structure de votre application e-commerce de produits halieutiques, mais il y a quelques clarifications et corrections à apporter pour mieux organiser les entités et les relations dans votre système. Voici quelques suggestions :
+
+1. **Utilisateur et Administrateur** :
+   - Vous avez correctement identifié deux acteurs principaux : l'utilisateur et l'administrateur.
+   - L'utilisateur doit créer un compte pour utiliser la plateforme, ce qui est une bonne approche pour gérer les informations des utilisateurs.
+
+2. **Commandes** :
+   - Les utilisateurs peuvent passer des commandes. Il y a une relation entre les utilisateurs et les commandes, ce qui est une relation appropriée.
+
+3. **Produits** :
+   - Vous mentionnez que l'administrateur peut mettre des produits en ligne. Cela signifie que vous avez une entité "Produit" et une relation entre l'administrateur et les produits.
+
+4. **Notification de commande** :
+   - Vous dites que l'administrateur peut notifier le client lorsque sa commande est reçue. Cela peut être géré en enregistrant l'état de la commande, par exemple, en ajoutant un champ "État de la commande" qui peut être mis à jour par l'administrateur pour indiquer que la commande est "En attente", "En cours de traitement", "Expédiée", etc.
+
+5. **Stockage de produits** :
+   - Vous mentionnez que l'administrateur peut stocker ou ne pas stocker des produits en ligne. Cela peut être géré en ajoutant un champ "Disponibilité" à l'entité "Produit" pour indiquer si un produit est disponible ou non.
+
+6. **Visualisation de produits** :
+   - Les utilisateurs peuvent voir les produits mis en ligne par l'administrateur. Vous pouvez avoir une interface de recherche ou de filtrage pour que les utilisateurs puissent facilement parcourir les produits.
+
+7. **Table associative** :
+   - Vous avez mentionné une table associative "passecommande", mais il n'est pas clair si cela est nécessaire. En général, vous pouvez gérer les relations entre les utilisateurs et les commandes directement sans avoir besoin d'une table associative distincte, à moins qu'il n'y ait des informations spécifiques à stocker pour chaque association.
+
+8. **Suggestion d'amélioration** :
+   - Il peut être utile d'ajouter des entités pour gérer les informations relatives aux produits, telles que les catégories de produits, les descriptions, les images, les prix, etc.
+
+En résumé, votre structure de base semble correcte, mais il peut y avoir quelques détails à ajuster en fonction de vos besoins spécifiques. Assurez-vous de bien planifier votre base de données et les fonctionnalités de votre application pour répondre aux exigences de votre entreprise.
+
+
+---------------------------------
+1. Identifiez les tables nécessaires :
+
+Utilisateurs (pour stocker les informations des utilisateurs, y compris les clients et les administrateurs).
+Commandes (pour stocker les détails de chaque commande passée par un utilisateur).
+Produits (pour stocker les informations sur les produits disponibles).
+Catégories de produits (pour organiser les produits en catégories).
+Images de produits (si vous souhaitez stocker plusieurs images pour chaque produit).
+Commande_Produit (pour gérer la relation entre les commandes et les produits).
+-----------------------------------
+2. Créez le modèle conceptuel :
+
+Le modèle conceptuel représente les entités et leurs relations de manière abstraite. Voici une description textuelle de ces entités et de leurs relations :
+
+Un utilisateur peut passer plusieurs commandes, mais une commande est associée à un seul utilisateur (relation un-à-plusieurs).
+Une commande peut contenir plusieurs produits, et un produit peut être présent dans plusieurs commandes (relation plusieurs-à-plusieurs). Cette relation est gérée par la table Commande_Produit.
+Chaque produit appartient à une catégorie de produits (relation un-à-plusieurs).
+Vous pouvez également ajouter des attributs supplémentaires à chaque entité, comme le nom, la description, la quantité en stock, le prix, etc.
+-----------------------------------
+ Créez le modèle relationnel :
+
+Sur la base du modèle conceptuel, vous pouvez créer un modèle relationnel, qui identifie les tables, les clés primaires et étrangères, ainsi que les colonnes de chaque table. Voici un exemple simplifié du modèle relationnel :
+
+Table utilisateurs :
+
+id (clé primaire)
+nom
+email
+mot_de_passe
+role (pour distinguer les clients des administrateurs)
+Table commandes :
+
+id (clé primaire)
+utilisateur_id (clé étrangère vers la table utilisateurs)
+date_commande
+etat (En attente, En cours de traitement, Expédiée, etc.)
+Table produits :
+
+id (clé primaire)
+nom
+description
+categorie_id (clé étrangère vers la table categories_produits)
+prix
+quantite_en_stock
+...
+Table categories_produits :
+
+id (clé primaire)
+nom
+description
+Table images_produits :
+
+id (clé primaire)
+produit_id (clé étrangère vers la table produits)
+url (chemin vers l'image)
+Table commande_produit (table pivot pour gérer la relation entre commandes et produits) :
+
+id (clé primaire)
+commande_id (clé étrangère vers la table commandes)
+produit_id (clé étrangère vers la table produits)
+quantite (pour enregistrer la quantité de chaque produit dans une commande)

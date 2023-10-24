@@ -1,0 +1,3 @@
+apres migration des donnes du tableau , veiller aller au niveau de ma base de donnee, nommee bd_examen dans mon phpmyadmin, ainsi au niveau 
+de la table user, il y'a un column du nom role, vous y metter le mot cles "admin" afin de permettrre  un utilisateur d'etres un administrateur dans
+la base de donnee.  Sinon vous ne pourrez  pas acceder  en tant que admin. je repete  sinon vous aurrez pas la possibilite  de gerer la partie admin!!!
